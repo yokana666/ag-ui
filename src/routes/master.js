@@ -165,6 +165,7 @@ module.exports = [
         settings: {
             group: "master",
             permission: { "C9": 1 },
+            iconClass: 'fa fa-dashboard'
         }
     },
     {
