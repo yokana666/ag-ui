@@ -1,3 +1,4 @@
+import {bindable} from 'aurelia-framework'
 var ProductLoader = require('../../../../loader/product-loader');
 
 export class PurchaseRequestItem {
