@@ -1,0 +1,72 @@
+<template>
+    <form class="form-horizontal">
+        <fieldset>
+
+            <datepicker label="Tanggal Mulai" value.bind="data.dateStart" error.bind="error.dateStart" read-only.bind="(readOnly)"></datepicker>
+
+            <timepicker 
+                label="Jam Mulai" 
+                value.bind="data.timeInMomentStart" 
+                error.bind="error.timeInMillisStart" 
+                disabled.bind="(readOnly)" 
+                showsecond.bind="timePickerShowSecond" 
+                format.bind="timePickerFormat" 
+                change.delegate=timeStartChanged($event)>
+            </timepicker>
+
+            <datepicker label="Tanggal Selesai" value.bind="data.dateEnd" error.bind="error.dateEnd" read-only.bind="(readOnly)"></datepicker>
+
+            <timepicker 
+                label="Jam Selesai" 
+                value.bind="data.timeInMomentEnd" 
+                error.bind="error.timeInMillisEnd" 
+                disabled.bind="(readOnly)" 
+                showsecond.bind="timePickerShowSecond" 
+                format.bind="timePickerFormat" 
+                change.delegate=timeEndChanged($event)>
+            </timepicker>
+
+            <machine-auto-suggest-by-division 
+                label="Mesin" 
+                value.bind="data.machine" 
+                error.bind="error.machine" 
+                read-only.bind="(readOnly)" 
+                filter.bind="divisionFilter" 
+                change.delegate="machineChanged($event)">
+            </machine-auto-suggest-by-division>
+
+            <production-order-auto-suggest 
+                label="Nomor Order Produksi" 
+                value.bind="data.productionOrder" 
+                error.bind="error.productionOrder" 
+                read-only.bind="(readOnly)" 
+                change.delegate=productionOrderChanged($event)>
+            </production-order-auto-suggest>
+            
+            <dropdown 
+                label="Warna" 
+                value.bind="data.selectedProductionOrderDetail" 
+                error.bind="error.selectedProductionOrderDetail" 
+                read-only.bind="readOnly" 
+                items.bind="productionOrderDetails"
+                if.bind="hasProductionOrderDetails && !readOnly">
+            </dropdown>
+
+            <textbox label="Warna" value.bind="data.selectedProductionOrderDetail.colorRequest" read-only.bind="readOnly" if.bind="readOnly"></textbox>
+
+            <textbox label="Nomor Kereta" value.bind="data.cartNumber" error.bind="error.cartNumber" read-only.bind="readOnly"></textbox>
+
+            <machine-event-auto-suggest
+                label="Event Mesin" 
+                value.bind="data.machineEvent"
+                error.bind="error.machineEvent" 
+                read-only.bind="(readOnly)"
+                filter.bind="machineCodeFilter"
+                if.bind="hasMachine"> 
+            </machine-event-auto-suggest>
+
+            <multiline label="Keterangan" value.bind="data.remark" error.bind="error.remark" read-only.bind="(readOnly)"></multiline>
+
+        </fieldset>
+    </form>
+</template>
