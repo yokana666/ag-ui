@@ -7,7 +7,7 @@ import { Config } from "aurelia-api";
 export class RestService {
 
   constructor(HttpClient, EventAggregator, config, api) {
-    this.endpoint = config.getEndpoint(api); 
+    this.endpoint = config.getEndpoint(api);
     // this._config =config; 
     
     // console.log(this.endpoint.defaults);
@@ -120,7 +120,7 @@ export class RestService {
   getXls(endpoint, header) {
     var request = {
       method: 'GET',
-      headers: new Headers(Object.assign({}, this.header, header, { "Accept": "application/xls" }))
+      headers: new Headers(Object.assign({}, this.header, header, { "Accept": "application/xls", "x-timezone-offset": this.endpoint.defaults.headers["x-timezone-offset"] }))
     };
     var getRequest = this.endpoint.client.fetch(endpoint, request)
     this.publish(getRequest);
@@ -131,7 +131,7 @@ export class RestService {
   getPdf(endpoint, header) {
     var request = {
       method: 'GET',
-      headers: new Headers(Object.assign({}, this.header, header, { "Accept": "application/pdf" }))
+      headers: new Headers(Object.assign({}, this.header, header, { "Accept": "application/pdf", "x-timezone-offset": this.endpoint.defaults.headers["x-timezone-offset"] }))
     };
     var getRequest = this.endpoint.client.fetch(endpoint, request)
     this.publish(getRequest);
