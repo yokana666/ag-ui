@@ -14,10 +14,10 @@ export class List {
         "AG Durasi Bon Terima Unit - Surat Perintah Bayar",
         "AG PR belum dibuat PO Internal",
         "AG Bon Terima Unit Belum Dibuat Surat Perintah Bayar",
-        "AG Total Pembelian",
         "AG Total Hutang",
         "AG Perbandingan Purchase Order",
         "AG Ketepatan Waktu Supplier",
+        "AG Top Ten Supplier per Kategori",
 
     ];
     constructor(router, service) {
