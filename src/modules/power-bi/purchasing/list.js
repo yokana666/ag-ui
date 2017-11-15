@@ -18,6 +18,7 @@ export class List {
         "AG Total Hutang",
         "AG Perbandingan Purchase Order",
         "AG Ketepatan Waktu Supplier",
+        "AG Top Ten Supplier per Kategori",
 
     ];
     constructor(router, service) {
