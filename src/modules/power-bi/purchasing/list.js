@@ -17,6 +17,7 @@ export class List {
         "AG Total Pembelian",
         "AG Total Hutang",
         "AG Perbandingan Purchase Order",
+        "AG Perbandingan Purchase Order Per Staff",
         "AG Ketepatan Waktu Supplier",
         "AG Top Ten Supplier per Kategori",
 
