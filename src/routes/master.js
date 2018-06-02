@@ -156,6 +156,20 @@ module.exports = [
         }
 
     },
+    {
+        route: 'storages',
+        name: 'storages',
+        moduleId: './modules/master/storage/index',
+        nav: true,
+        title: 'Storage',
+        auth: true,
+        settings: {
+            group: "master",
+            permission: { "C9": 1 },
+            iconClass: 'fa fa-dashboard'
+        }
+
+    },
     // {
     //     route: 'machine-types',
     //     name: 'machine-types',
