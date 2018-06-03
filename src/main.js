@@ -33,8 +33,8 @@ export async function configure(aurelia) {
       var core = "https://ag-core-api-dev.mybluemix.net/v1/";
       var auth = "https://ag-auth-api-dev.mybluemix.net/v1/";
       var production = "https://ag-production-webapi-dev.mybluemix.net/v1/";
-      var purchasing = "https://ag-purchasing-webapi-dev.mybluemix.net/v1/";    
-      
+      var purchasing = "https://ag-purchasing-webapi-dev.mybluemix.net/v1/"; 
+           
       config.registerEndpoint('auth', auth);
       config.registerEndpoint('core', core);
       config.registerEndpoint('production', production, defaultConfig);
