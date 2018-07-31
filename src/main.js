@@ -30,10 +30,10 @@ export async function configure(aurelia) {
         }
       }
       
-      var core = "https://ag-core-api-dev.azurewebsites.net/v1/";
-      var auth = "https://ag-auth-api.azurewebsites.net/v1/";
+      var core = "https://ag-core-api.azurewebsites.net/v1/";
+      var auth = "https://ag-auth-api-prd.azurewebsites.net/v1/";
       var production = "https://ag-production-webapi.mybluemix.net/v1/";
-      var purchasing = "https://ag-purchasing-webapi-dev.azurewebsites.net/v1/";    
+      var purchasing = "https://ag-purchasing-webapi.azurewebsites.net/v1/";    
       
       config.registerEndpoint('auth', auth);
       config.registerEndpoint('core', core);
