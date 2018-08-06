@@ -32,7 +32,7 @@ export async function configure(aurelia) {
       
       var core = "https://ag-core-api-uat.azurewebsites.net/v1/";
       var auth = "https://ag-auth-api-uat.azurewebsites.net/v1/";
-      var production = "https://ag-production-webapi-uat.mybluemix.net/v1/";
+      var production = "https://ag-production-webapi-uat.azurewebsites.net/v1/";
       var purchasing = "https://ag-purchasing-webapi-uat.azurewebsites.net/v1/";    
       
       config.registerEndpoint('auth', auth);
