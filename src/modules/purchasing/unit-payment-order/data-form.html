@@ -1,5 +1,9 @@
 <template>
-    <form class="form-horizontal">
+        <au-input-form 
+        title.bind="title" 
+        with.bind="context">
+
+    <!-- <form class="form-horizontal"> -->
         <div class="row">
             <div class="col-md-6">  
                 <textbox                                        label="No. Surat Perintah Bayar"     value.bind="data.no"                    error.bind="error.no"               read-only.bind="true" if.bind="readOnly || isEdit"></textbox> 
@@ -26,6 +30,22 @@
             </div>
         </div>                                    
         <hr /> 
-        <unit-payment-order-item-collection value.bind="data.items" error.bind="error.items" read-only.bind="readOnly" filter.one-way="filter"></unit-payment-order-item-collection>
-    </form>
+
+        <!-- <unit-payment-order-item-collection onAddItem.bind="addItems" value.bind="data.items" error.bind="error.items" read-only.bind="readOnly" filter.one-way="filter"></unit-payment-order-item-collection> -->
+        
+        <au-collection 
+        items.bind="data.items" 
+        errors.bind="error.items" 
+        columns.bind="itemsInfo.columns" 
+        add.bind="itemsInfo.onAdd" 
+        remove.bind="removeItems"
+        options.one-way="filter"
+        read-only.bind="readOnly"
+        view-model.ref="ItemsCollection"
+        show.bind = "filter.divisionId && filter.supplierId && filter.categoryId && filter.paymentMethod && filter.currencyCode"
+        item-template="modules/purchasing/unit-payment-order/template/unit-payment-order-item">
+        </au-collection>
+
+    <!-- </form> -->
+</au-input-form>
 </template>

@@ -6,9 +6,12 @@ export class DataForm {
     @bindable readOnly = false;
     @bindable data = {};
     @bindable error = {};
+    @bindable options = { isUseIncomeTax: false };
 
     termPaymentOptions = ['CASH', 'KREDIT', 'DP (DOWN PAYMENT) + BP (BALANCE PAYMENT)', 'DP (DOWN PAYMENT) + TERMIN 1 + BP (BALANCE PAYMENT)', 'RETENSI'];
     freightCostByOptions = ['Penjual', 'Pembeli'];
+
+    itemsColumns = [{ header: "Nomor PR", value: "purchaseRequest.no" }]
 
     constructor(bindingEngine, element) {
         this.bindingEngine = bindingEngine;
@@ -28,9 +31,16 @@ export class DataForm {
         }
     }
 
-    addItem() {
-        this.data.items = this.data.items ? this.data.items : [];
-        this.data.items.push({ showDetails: false });
+
+    // addItem() {
+    //     this.data.items = this.data.items ? this.data.items : [];
+    //     this.data.items.push({ showDetails: false });
+    // }
+
+    get addItems() {
+        return (event) => {
+            this.data.items.push({ purchaseRequest: { no: "" } })
+        };
     }
 
     removeItem(item) {
@@ -38,7 +48,10 @@ export class DataForm {
         this.data.items.splice(itemIndex, 1);
     }
 
-    bind() {
+    bind(context) {
+        this.context = context;
+        this.data = this.context.data;
+        this.error = this.context.error;
         if (this.data && this.data.supplier)
             this.data.supplier.toString = function () {
                 return this.code + " - " + this.name;

@@ -1,4 +1,5 @@
 <template>
+        <au-input-form title.bind="title" with.bind="context">
     <form class="form-horizontal">
         <textbox                label="Nomor Surat Jalan"   value.bind="data.no"                error.bind="error.no"                 read-only.bind="readOnly"></textbox>
         <datepicker             label="Tgl. Surat Jalan"    value.bind="data.supplierDoDate"    error.bind="error.supplierDoDate"     read-only.bind="readOnly" format="DD MMMM YYYY"></datepicker> 
@@ -6,6 +7,25 @@
         <supplier-auto-suggest  label="Supplier"            value.bind="data.supplier"          error.bind="error.supplier"           read-only.bind="readOnly"   change.delegate="supplierChanged($event)"></supplier-auto-suggest>
         <multiline              label="Keterangan"          value.bind="data.remark"            error.bind="error.remark"             read-only.bind="readOnly"></multiline>
         <hr/>
-        <delivery-order-item-collection value.bind="data.items" error.bind="error.items" read-only.bind="readOnly" filter.one-way="filter" if.bind="data.supplierId" is-edit.bind="isEdit"></delivery-order-item-collection>
+        <!-- <delivery-order-item-collection value.bind="data.items" error.bind="error.items" read-only.bind="readOnly" filter.one-way="filter" if.bind="data.supplierId" is-edit.bind="isEdit"></delivery-order-item-collection> -->
+
     </form> 
+
+    <au-collection 
+    items.bind="data.items" 
+    errors.bind="error.items" 
+    columns.bind="itemsInfo.columns" 
+    add.bind="itemsInfo.onAdd" 
+    remove.bind="removeItems"
+    options.one-way="filter"
+    read-only.bind="readOnly"
+    show.bind="data.supplierId"
+    view-model.ref="ItemsCollection"
+    item-template="modules/purchasing/delivery-order/template/delivery-order-item">
+    </au-collection> 
+
+    </template>
+</form>
+</au-input-form>
+
 </template>
