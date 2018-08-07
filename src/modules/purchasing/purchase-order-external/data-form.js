@@ -1,6 +1,8 @@
 import { inject, bindable, BindingEngine, observable, computedFrom } from 'aurelia-framework'
 var moment = require('moment');
 
+var VatLoader = require('../../../loader/vat-loader');
+
 @inject(BindingEngine, Element)
 export class DataForm {
     @bindable readOnly = false;
@@ -22,6 +24,12 @@ export class DataForm {
     get isEdit() {
         return (this.data._id || '').toString() != '';
     }
+
+    controlOptions = {
+        control: {
+            length: 8
+        }
+    };
 
     attached() {
         if (this.data.items) {
@@ -109,6 +117,15 @@ export class DataForm {
                 }
             }
         }
+    }
+
+    getText = (text) => {
+        var data = text._id ? `${text.name} - ${text.rate}` : "";
+        return data
+    }
+
+    get vatLoader() {
+        return VatLoader;
     }
 
 } 
