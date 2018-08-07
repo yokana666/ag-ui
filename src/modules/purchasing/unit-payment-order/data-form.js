@@ -6,6 +6,7 @@ export class DataForm {
     @bindable readOnly = false;
     @bindable data = {};
     @bindable error = {};
+    @bindable title;
 
     termPaymentOptions = ['CASH', 'KREDIT', 'DP (DOWN PAYMENT) + BP (BALANCE PAYMENT)', 'DP (DOWN PAYMENT) + TERMIN 1 + BP (BALANCE PAYMENT)', 'RETENSI'];
 
@@ -19,12 +20,37 @@ export class DataForm {
         return (this.data._id || '').toString() != '';
     }
 
-    bind() {
+    bind(context) {
+        this.context = context;
+        this.data = this.context.data;
+        this.error = this.context.error;
         if (this.data && this.data.supplier)
             this.data.supplier.toString = function () {
                 return this.code + " - " + this.name;
             };
     }
+
+    @computedFrom("data.division", "data.supplier", "data.category", "data.paymentMethod", "data.currency", "data.vatRate", "data.useIncomeTax")
+    get filter() {
+        var filter = {
+            divisionId: this.data.divisionId,
+            supplierId: this.data.supplierId,
+            categoryId: this.data.categoryId,
+            paymentMethod: this.data.paymentMethod,
+            currencyCode: (this.data.currency || {}).code || "",
+            vatRate: this.data.vatRate,
+            useIncomeTax: this.data.useIncomeTax
+        }
+        return filter;
+    }
+
+    itemsInfo = {
+        columns: [{ header: "Nomor Bon Unit- Nomor Surat Jalan", value: "unitReceiptNote.no" }],
+        onAdd: function () {
+            this.context.ItemsCollection.bind();
+            this.data.items.push({ unitReceiptNote: { no: "" } });
+        }.bind(this)
+    };
 
     @computedFrom("data.division", "data.supplier", "data.category", "data.paymentMethod", "data.currency", "data.vatRate", "data.useIncomeTax")
     get filter() {
