@@ -1,14 +1,19 @@
 import { inject, bindable, BindingEngine, observable, computedFrom } from 'aurelia-framework'
 var moment = require('moment');
 
+var VatLoader = require('../../../loader/vat-loader');
+
 @inject(BindingEngine, Element)
 export class DataForm {
     @bindable readOnly = false;
     @bindable data = {};
     @bindable error = {};
+    @bindable options = { isUseIncomeTax: false };
 
     termPaymentOptions = ['CASH', 'KREDIT', 'DP (DOWN PAYMENT) + BP (BALANCE PAYMENT)', 'DP (DOWN PAYMENT) + TERMIN 1 + BP (BALANCE PAYMENT)', 'RETENSI'];
     freightCostByOptions = ['Penjual', 'Pembeli'];
+
+    itemsColumns = [{ header: "Nomor PR", value: "purchaseRequest.no" }]
 
     constructor(bindingEngine, element) {
         this.bindingEngine = bindingEngine;
@@ -20,6 +25,12 @@ export class DataForm {
         return (this.data._id || '').toString() != '';
     }
 
+    controlOptions = {
+        control: {
+            length: 8
+        }
+    };
+
     attached() {
         if (this.data.items) {
             this.data.items.forEach(item => {
@@ -28,9 +39,16 @@ export class DataForm {
         }
     }
 
-    addItem() {
-        this.data.items = this.data.items ? this.data.items : [];
-        this.data.items.push({ showDetails: false });
+
+    // addItem() {
+    //     this.data.items = this.data.items ? this.data.items : [];
+    //     this.data.items.push({ showDetails: false });
+    // }
+
+    get addItems() {
+        return (event) => {
+            this.data.items.push({ purchaseRequest: { no: "" } })
+        };
     }
 
     removeItem(item) {
@@ -38,7 +56,10 @@ export class DataForm {
         this.data.items.splice(itemIndex, 1);
     }
 
-    bind() {
+    bind(context) {
+        this.context = context;
+        this.data = this.context.data;
+        this.error = this.context.error;
         if (this.data && this.data.supplier)
             this.data.supplier.toString = function () {
                 return this.code + " - " + this.name;
@@ -96,6 +117,15 @@ export class DataForm {
                 }
             }
         }
+    }
+
+    getText = (text) => {
+        var data = text._id ? `${text.name} - ${text.rate}` : "";
+        return data
+    }
+
+    get vatLoader() {
+        return VatLoader;
     }
 
 } 

@@ -8,5 +8,5 @@ export default {
     authTokenType: "JWT",
     accessTokenProp: "data",
 
-    storageChangedReload : true
+    storageChangedReload : true,
 };
