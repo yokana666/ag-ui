@@ -31,7 +31,7 @@ export async function configure(aurelia) {
       }
       
       var core = "https://ag-core-api-dev.azurewebsites.net/v1/";
-      var auth = "https://ag-auth-api-dev.azurewebsites.net/v1/";
+      var auth = "https://ag-auth-api.azurewebsites.net/v1/";
       var production = "https://ag-production-webapi-dev.azurewebsites.net/v1/";
       var purchasing = "https://ag-purchasing-webapi-dev.azurewebsites.net/v1/";    
       
