@@ -46,28 +46,28 @@ export async function configure(aurelia) {
       // var customsReport = "https://com-danliris-service-support.azurewebsites.net/v1/";
       // var merchandiser = "https://com-danliris-service-md.azurewebsites-dev.net/v1/";
       // const dealTracking = 'https://com-danliris-service-deal-tracking-dev.azurewebsites.net/v1/';
-      const sales = "https://com-ag-service-sales-dev.azurewebsites.net/v1/";
+      var sales = "https://com-ag-service-sales-dev.azurewebsites.net/v1/";
       // var weaving = "https://com-danliris-service-weaving-dev.azurewebsites.net/";
       // var finance = "https://com-danliris-service-finance-accounting-dev.azurewebsites.net/v1/";
 
       config.registerEndpoint('auth', auth);
       config.registerEndpoint('core', core);
-      config.registerEndpoint('production', production, defaultConfig);
-      config.registerEndpoint('production-azure', productionAzure, defaultConfig);
-      config.registerEndpoint('purchasing', purchasing, defaultConfig);
-      config.registerEndpoint('purchasing-azure', purchasingAzure, defaultConfig);
-      config.registerEndpoint('garment-purchasing', garmentPurchasing, defaultConfig);
-      config.registerEndpoint('inventory', inventory, defaultConfig);
-      config.registerEndpoint('inventory-azure', inventoryAzure, defaultConfig);
-      config.registerEndpoint('garment-master-plan', garmentMasterPlan, defaultConfig);
-      config.registerEndpoint('spinning', spinning, defaultConfig);
-      config.registerEndpoint('int-purchasing', intPurchasing, defaultConfig);
-      config.registerEndpoint('customs-report', customsReport, defaultConfig);
-      config.registerEndpoint('merchandiser', merchandiser, defaultConfig);
-      config.registerEndpoint('deal-tracking', dealTracking, defaultConfig);
+      // config.registerEndpoint('production', production, defaultConfig);
+      // config.registerEndpoint('production-azure', productionAzure, defaultConfig);
+      // config.registerEndpoint('purchasing', purchasing, defaultConfig);
+      // config.registerEndpoint('purchasing-azure', purchasingAzure, defaultConfig);
+      // config.registerEndpoint('garment-purchasing', garmentPurchasing, defaultConfig);
+      // config.registerEndpoint('inventory', inventory, defaultConfig);
+      // config.registerEndpoint('inventory-azure', inventoryAzure, defaultConfig);
+      // config.registerEndpoint('garment-master-plan', garmentMasterPlan, defaultConfig);
+      // config.registerEndpoint('spinning', spinning, defaultConfig);
+      // config.registerEndpoint('int-purchasing', intPurchasing, defaultConfig);
+      // config.registerEndpoint('customs-report', customsReport, defaultConfig);
+      // config.registerEndpoint('merchandiser', merchandiser, defaultConfig);
+      // config.registerEndpoint('deal-tracking', dealTracking, defaultConfig);
       config.registerEndpoint('sales', sales, defaultConfig);
-      config.registerEndpoint('weaving', weaving, defaultConfig);
-      config.registerEndpoint('finance', finance, defaultConfig);
+      // config.registerEndpoint('weaving', weaving, defaultConfig);
+      // config.registerEndpoint('finance', finance, defaultConfig);
     })
     .plugin("aurelia-authentication", baseConfig => {
       baseConfig.configure(authConfig);
