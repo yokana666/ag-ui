@@ -8,7 +8,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -21,7 +21,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -34,7 +34,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -47,7 +47,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -60,7 +60,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -73,20 +73,20 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
   {
-    route: "weaving/machine-shift",
-    name: "weaving-machine-shift",
-    moduleId: "./modules/weaving/master-machine-shift/index",
+    route: "weaving/shift",
+    name: "weaving-shift",
+    moduleId: "./modules/weaving/master-shift/index",
     nav: true,
-    title: "Master Shift Mesin",
+    title: "Master Shift",
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -99,7 +99,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -112,7 +112,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -125,7 +125,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -138,7 +138,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -151,7 +151,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -164,7 +164,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -177,7 +177,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -190,7 +190,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -203,33 +203,7 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
-      iconClass: "fa fa-dashboard"
-    }
-  },
-  {
-    route: "weaving/production-results",
-    name: "production-results",
-    moduleId: "./modules/weaving/production-results/index",
-    nav: true,
-    title: "Hasil Produksi",
-    auth: true,
-    settings: {
-      group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
-      iconClass: "fa fa-dashboard"
-    }
-  },
-  {
-    route: "weaving/weaving-efficiency-report",
-    name: "weaving-efficiency-report",
-    moduleId: "./modules/weaving/weaving-efficiency-report/index",
-    nav: true,
-    title: "Laporan Efisiensi Weaving",
-    auth: true,
-    settings: {
-      group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   },
@@ -242,7 +216,33 @@ module.exports = [
     auth: true,
     settings: {
       group: "weaving",
-      permission: { W1: 1, W2: 1, "*": 1 },
+      //permission: { W1: 1, W2: 1, "*": 1 },
+      iconClass: "fa fa-dashboard"
+    }
+  },
+  {
+    route: "weaving/production-results",
+    name: "production-results",
+    moduleId: "./modules/weaving/production-results/index",
+    nav: true,
+    title: "Hasil Produksi",
+    auth: true,
+    settings: {
+      group: "weaving",
+      //permission: { W1: 1, W2: 1, "*": 1 },
+      iconClass: "fa fa-dashboard"
+    }
+  },
+  {
+    route: "weaving/weaving-efficiency-report",
+    name: "weaving-efficiency-report",
+    moduleId: "./modules/weaving/weaving-efficiency-report/index",
+    nav: true,
+    title: "Laporan Efisiensi Weaving",
+    auth: true,
+    settings: {
+      group: "weaving",
+      //permission: { W1: 1, W2: 1, "*": 1 },
       iconClass: "fa fa-dashboard"
     }
   }
