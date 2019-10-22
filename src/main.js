@@ -31,7 +31,8 @@ export async function configure(aurelia) {
       }
 
       //var auth = "https://ag-auth-api-dev.azurewebsites.net/v1/";
-      var auth = "https://ag-auth-api-prd.azurewebsites.net/v1/";
+      //var auth = "https://ag-auth-api-prd.azurewebsites.net/v1/";
+      var auth = "https://ag-auth-webapi-prd-bearer.azurewebsites.net/v1/";
       var core = "https://com-ag-service-core.azurewebsites.net/v1/";
       // var production = "https://dl-production-webapi.azurewebsites.net/v1/";
       // var productionAzure = "https://com-danliris-service-finishing-printing-dev.azurewebsites.net/v1/";
