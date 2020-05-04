@@ -32,13 +32,15 @@ export async function configure(aurelia) {
 
       var auth = "https://ag-auth-api-dev.azurewebsites.net/v1/";
       var core = "https://com-ag-service-core-dev.azurewebsites.net/v1/";
+      // var core = "http://localhost:63704/v1/";
       // var production = "https://dl-production-webapi.azurewebsites.net/v1/";
       // var productionAzure = "https://com-danliris-service-finishing-printing-dev.azurewebsites.net/v1/";
       // var purchasing = "https://dl-purchasing-webapi-dev.azurewebsites.net/v1/";
-      // var purchasingAzure = "https://com-danliris-service-purchasing-dev.azurewebsites.net/v1/";
+      var purchasingAzure = "https://com-ag-service-purchasing-dev.azurewebsites.net/v1/";
+      // var purchasingAzure = "http://localhost:55080/v1/";
       // var garmentPurchasing = "https://dl-purchasing-garment-webapi.azurewebsites.net/v1/";
       // var inventory = "https://dl-inventory-webapi.azurewebsites.net/v1/";
-       var inventoryAzure = "https://com-ag-service-inventory-dev.azurewebsites.net/v1/";
+      var inventoryAzure = "https://com-ag-service-inventory-dev.azurewebsites.net/v1/";
       // var garmentMasterPlan = "https://dl-garment-master-plan-webapi.azurewebsites.net/v1/";
       // var spMasterPlan = "https://dl-sp-master-plan-webapi-dev.mybluemix.net/v1/";
       // var spinning = "https://com-danliris-service-spinning-dev.azurewebsites.net/";
@@ -47,6 +49,7 @@ export async function configure(aurelia) {
       // var merchandiser = "https://com-danliris-service-md.azurewebsites-dev.net/v1/";
       // const dealTracking = 'https://com-danliris-service-deal-tracking-dev.azurewebsites.net/v1/';
       var sales = "https://com-ag-service-sales-dev.azurewebsites.net/v1/";
+      // var sales = "http://localhost:64340/v1/";
       // var weaving = "https://com-danliris-service-weaving-dev.azurewebsites.net/";
       // var finance = "https://com-danliris-service-finance-accounting-dev.azurewebsites.net/v1/";
 
@@ -55,10 +58,10 @@ export async function configure(aurelia) {
       // config.registerEndpoint('production', production, defaultConfig);
       // config.registerEndpoint('production-azure', productionAzure, defaultConfig);
       // config.registerEndpoint('purchasing', purchasing, defaultConfig);
-      // config.registerEndpoint('purchasing-azure', purchasingAzure, defaultConfig);
+      config.registerEndpoint('purchasing-azure', purchasingAzure, defaultConfig);
       // config.registerEndpoint('garment-purchasing', garmentPurchasing, defaultConfig);
       // config.registerEndpoint('inventory', inventory, defaultConfig);
-       config.registerEndpoint('inventory-azure', inventoryAzure, defaultConfig);
+      config.registerEndpoint('inventory-azure', inventoryAzure, defaultConfig);
       // config.registerEndpoint('garment-master-plan', garmentMasterPlan, defaultConfig);
       // config.registerEndpoint('spinning', spinning, defaultConfig);
       // config.registerEndpoint('int-purchasing', intPurchasing, defaultConfig);

@@ -2,18 +2,17 @@ import { Router } from "aurelia-router";
 import { inject, bindable, BindingEngine, observable, computedFrom } from 'aurelia-framework';
 import { ServiceEffeciency } from './service-efficiency';
 import { RateService } from './service-rate';
-
-
+import { ServiceCore } from './service-core';
 import numeral from 'numeral';
 numeral.defaultFormat("0,0.00");
 const rateNumberFormat = "0,0.000";
+var PreSalesContractLoader = require('../../../loader/garment-pre-sales-contracts-loader');
 var SizeRangeLoader = require('../../../loader/size-range-loader');
-var BuyersLoader = require('../../../loader/garment-buyers-loader');
-var BuyerBrandLoader = require('../../../loader/garment-buyer-brand-loader');
 var ComodityLoader = require('../../../loader/garment-comodities-loader');
 var UOMLoader = require('../../../loader/uom-loader');
 var UnitLoader = require('../../../loader/garment-units-loader');
-@inject(Router, BindingEngine, ServiceEffeciency, RateService,Element)
+
+@inject(Router, BindingEngine, ServiceEffeciency, RateService, Element, ServiceCore)
 export class DataForm {
   @bindable title;
   @bindable readOnly;
@@ -26,12 +25,12 @@ export class DataForm {
   @bindable data = {};
   @bindable error = {};
   @bindable SelectedRounding;
+  @bindable isCopy = false;
  
-  sectionsList = ["", "A", "B", "C", "D", "E"];
-  leadTimeList = ["", "30 hari", "45 hari"];
-
-  
+  leadTimeList = ["", "25 hari", "35 hari"];
   defaultRate = { Id: 0, Value: 0, CalculatedValue: 0 };
+  rateList = ["", "IDR", "USD"];
+
   length0 = {
     label: {
       align: "left"
@@ -55,10 +54,15 @@ export class DataForm {
       length: 8
     }
   }
-
+  preSalesContractFilter = {
+    IsPosted: true,
+    SCType: "JOB ORDER"
+  }
 
   costCalculationGarment_MaterialsInfo = {
     columns: [
+      { header: "PR Master" },
+      { header: "No. PO" },
       { header: "Kategori", value: "Category" },
       { header: "Kode Barang", value: "ProductCode" },
       { header: "Komposisi", value: "Composition" },
@@ -66,6 +70,7 @@ export class DataForm {
       { header: "Yarn", value: "Yarn" },
       { header: "Width", value: "Width" },
       { header: "Deskripsi", value: "Description" },
+      { header: "Detail Barang", value: "ProductRemark" },
       { header: "Kuantitas", value: "Quantity" },
       { header: "Satuan", value: "SatuanQuantity" },
       { header: "Price", value: "Price" },
@@ -90,26 +95,85 @@ export class DataForm {
         SMV_Total: this.data.SMV_Total,
         Efficiency: this.data.Efficiency
       });
-    }.bind(this)
-  }
-  radio = {
-    Dollar: "Dollar",
-    Rupiah: "Rupiah"
+    }.bind(this),
+    options: {}
   }
 
-  constructor(router, bindingEngine, serviceEffeciency, rateService,element) {
+  // radio = {
+  //   Dollar: "Dollar",
+  //   Rupiah: "Rupiah"
+  // }
+
+  
+
+  constructor(router, bindingEngine, serviceEffeciency, rateService, element, serviceCore) {
     this.router = router;
     this.bindingEngine = bindingEngine;
     this.efficiencyService = serviceEffeciency;
     this.rateService = rateService;
-    this.element = element; 
-    this.selectedRate = "USD"
+    this.element = element;
+    this.selectedRate = ""; //remove set value
+    this.serviceCore = serviceCore;
   }
+
+  @bindable selectedPreSalesContract;
+  async selectedPreSalesContractChanged(newValue, oldValue) {
+    if (newValue) {
+      this.data.PreSCId = newValue.Id;
+      this.data.PreSCNo = newValue.SCNo;
+      this.data.Section = newValue.SectionCode;
+      const section = await this.serviceCore.getSection(newValue.SectionId);
+      this.data.SectionName = section.Name;
+      this.data.Buyer = {
+        Id: newValue.BuyerAgentId,
+        Code: newValue.BuyerAgentCode,
+        Name: newValue.BuyerAgentName
+      };
+      this.data.BuyerBrand = {
+        Id: newValue.BuyerBrandId,
+        Code: newValue.BuyerBrandCode,
+        Name: newValue.BuyerBrandName
+      };
+    } else {
+      this.data.PreSCId = 0;
+      this.data.PreSCNo = null;
+      this.data.Section = null;
+      this.data.SectionName = null;
+      this.data.Buyer = null;
+      this.data.BuyerBrand = null;
+    }
+
+    if ((oldValue && newValue) || (oldValue && !newValue)) {
+      this.data.CostCalculationGarment_Materials.splice(0);
+    } else if (this.data.PreSCNoSource && this.data.PreSCNo !== this.data.PreSCNoSource) {
+      const materialsFromPRMaster = this.data.CostCalculationGarment_Materials.filter(m => m.PRMasterItemId > 0);
+      for (const materialFromPRmaster of materialsFromPRMaster) {
+        const index = this.data.CostCalculationGarment_Materials.indexOf(materialFromPRmaster);
+        this.data.CostCalculationGarment_Materials.splice(index, 1);
+      }
+    }
+    this.costCalculationGarment_MaterialsInfo.options.SCId = this.data.PreSCId;
+  }
+
+  @bindable selectedRate = ""; 
+  selectedRateChanged(newValue, oldValue) { //condition rule option changed
+ 		this.rateService.search({ filter: "{Name:\""+newValue+"\"}"}) // get USD rate value from master.rate
+        .then(results => {
+          let result = results.data[0] ? results.data[0] : this.defaultRate;
+          result.Value = numeral(numeral(result.Value).format(rateNumberFormat)).value();
+          this.data.Rate = result;
+
+          if (this.data.CostCalculationGarment_Materials){
+          	this.data.CostCalculationGarment_Materials.forEach(item =>{
+          		item.Rate = this.data.Rate;
+          	})
+          }
+        });  
+    }
 
   async bind(context) {
     this.context = context;
     this.data = this.context.data;
-  console.log(this.data);
     this.error = this.context.error;
     this.selectedSMV_Cutting = this.data.SMV_Cutting ? this.data.SMV_Cutting : 0;
     this.selectedSMV_Sewing = this.data.SMV_Sewing ? this.data.SMV_Sewing : 0;
@@ -118,11 +182,9 @@ export class DataForm {
     this.fabricAllowance = this.data.FabricAllowance ? this.data.FabricAllowance : 0;
     this.accessoriesAllowance = this.data.AccessoriesAllowance ? this.data.AccessoriesAllowance : 0;
     this.data.Risk = this.data.Risk ? this.data.Risk : 5;
-    this.imageSrc = this.data.ImageFile = this.isEdit ? (this.data.ImageFile || "#") : "#";
+    this.imageSrc = this.data.ImageFile = this.isEdit || this.isCopy ? (this.data.ImageFile || "#") : "#";
     this.selectedLeadTime = this.data.LeadTime ? `${this.data.LeadTime} hari` : "";
     this.selectedUnit = this.data.Unit?this.data.Unit:"";
-    this.selectedBuyer = this.data.Buyer?this.data.Buyer:"";
-    this.selectedBuyerBrand = this.data.BuyerBrand?this.data.BuyerBrand:"";
     this.data.OTL1 = this.data.OTL1 ? this.data.OTL1 : Object.assign({}, this.defaultRate);
     this.data.OTL2 = this.data.OTL2 ? this.data.OTL2 : Object.assign({}, this.defaultRate);
     this.data.ConfirmPrice =this.data.ConfirmPrice ? this.data.ConfirmPrice .toLocaleString('en-EN', { minimumFractionDigits: 4}):0 ;
@@ -137,7 +199,7 @@ export class DataForm {
     }
     else {
       this.data.Wage = this.defaultRate;
-      wage = this.rateService.search({ keyword: "OL" })
+      wage = this.rateService.search({ filter: "{Name:\"OL\"}" })
         .then(results => {
           let result = results.data[0] ? results.data[0] : this.defaultRate;
           result.Value = numeral(numeral(result.Value).format(rateNumberFormat)).value();
@@ -155,7 +217,7 @@ export class DataForm {
     }
     else {
       this.data.THR = this.defaultRate;
-      THR = this.rateService.search({ keyword: "THR" })
+      THR = this.rateService.search({ filter: "{Name:\"THR\"}" })
         .then(results => {
           let result = results.data[0] ? results.data[0] : this.defaultRate;
           result.Value = numeral(numeral(result.Value).format(rateNumberFormat)).value();
@@ -165,6 +227,7 @@ export class DataForm {
     promises.push(THR);
 
     let rate;
+
     if (this.data.Rate) {
       rate = new Promise((resolve, reject) => {
         resolve(this.data.Rate);
@@ -172,7 +235,7 @@ export class DataForm {
     }
     else {
       this.data.Rate = this.defaultRate;
-      rate = this.rateService.search({ keyword: "USD" })
+      rate = this.rateService.search({ filter: "{Name:\"USD\"}"}) // get USD rate value from master.rate
         .then(results => {
           let result = results.data[0] ? results.data[0] : this.defaultRate;
           result.Value = numeral(numeral(result.Value).format(rateNumberFormat)).value();
@@ -185,9 +248,8 @@ export class DataForm {
     this.data.Wage = all[0];
     this.data.Wage.Value=this.data.Wage.Value.toLocaleString('en-EN', { minimumFractionDigits: 2 }) ;
     this.data.THR = all[1];
-    this.data.Rate = all[2];
-
-    // this.selectedRate = this.data.Rate ? this.data.Rate.Name : "";
+    this.RateDollar = all[2];
+    this.selectedRate = this.data.Rate ? this.data.Rate : ""; //option selector
     if (this.data.CostCalculationGarment_Materials) {
       this.data.CostCalculationGarment_Materials.forEach(item => {
         item.QuantityOrder = this.data.Quantity;
@@ -203,6 +265,13 @@ export class DataForm {
         item.Efficiency = this.data.Efficiency;
       })
     }
+
+    this.costCalculationGarment_MaterialsInfo.options.CCId = this.data.Id;
+    this.costCalculationGarment_MaterialsInfo.options.SCId = this.data.PreSCId;
+  }
+
+  get preSalesContractLoader() {
+    return PreSalesContractLoader;
   }
 
   get sizeRangeLoader() {
@@ -213,41 +282,38 @@ export class DataForm {
     return ComodityLoader;
   }
   comodityView = (comodity) => {
-    console.log(comodity);
     return`${comodity.Code} - ${comodity.Name}`
   }
-
 
   get uomLoader() {
     return UOMLoader;
   }
+
   get unitLoader() {
     return UnitLoader;
   }
-  unitView = (unit) => {
-  
-    return `${unit.Code} - ${unit.Name}`
-  }
-  get buyerLoader() {
-    return BuyersLoader;
-  }
-  buyerView = (buyer) => {
 
-    return `${buyer.Name}`
-  } 
-  get buyerBrandLoader() {
-    return BuyerBrandLoader;
-  }
-  buyerBrandView = (buyer) => {
-    return `${buyer.Name}`
-    console.log(buyer);
+  unitView = (unit) => {
+    return `${unit.Code} - ${unit.Name}`
   }
 
   uomView =(uom)=>{
-   
     return uom?`${uom.Unit}` : '';
-}
+  }
 
+  get dataSection() {
+    return (this.data.Section || this.data.SectionName) ? `${this.data.Section} - ${this.data.SectionName}` : "-";
+  } 
+
+  get dataBuyer() {
+    return this.data.Buyer ? this.data.Buyer.Name : "-";
+  } 
+
+  get dataBuyerBrand() {
+    return this.data.BuyerBrand ? this.data.BuyerBrand.Name : "-";
+  }
+
+  
 
   @bindable selectedComodity = "";
   selectedComodityChanged(newVal) {
@@ -259,55 +325,16 @@ export class DataForm {
     }
   }
 
-  @computedFrom("data.Buyer")
-  get filterBuyer() {
-    var filter={};
-  
-    if (this.data.Buyer) {
-     
-      filter = JSON.stringify({ "BuyerName": this.data.Buyer.Name })
-     
-    }
-    return filter;
-  }
-  @bindable selectedBuyer = "";
- 
-  selectedBuyerChanged(newVal) {
-    console.log(this.data.Buyer,newVal);
-    if(this.data.Buyer != newVal)
-   
-    this.context.buyerBrandAU.editorValue="";
-    this.data.Buyer = newVal;
-   
-    if (newVal) {
-     this.data.BuyerId=newVal.Id;
-     this.data.BuyerCode=newVal.Code;
-     this.data.BuyerName=newVal.Name;
-    
-    }
-  }
-
-  @bindable selectedBuyerBrand= "";
-  selectedBuyerBrandChanged(newVal) {
-    this.data.BuyerBrand = newVal;
-    console.log(newVal);
-    if (newVal) {
-     this.data.BuyerBrandId=newVal.Id;
-     this.data.BuyerBrandCode=newVal.Code;
-     this.data.BuyerBrandName=newVal.Name;  
-    }
-  }
-
   @bindable selectedLeadTime = "";
   selectedLeadTimeChanged(newVal) {
  
-    if (newVal === "30 hari")
+    if (newVal === "25 hari")
     {
-      this.data.LeadTime = 30;
+      this.data.LeadTime = 25;
     }
-    else if (newVal === "45 hari")
+    else if (newVal === "35 hari")
     {      
-      this.data.LeadTime = 45;
+      this.data.LeadTime = 35;
       
     }
     else
@@ -327,16 +354,6 @@ export class DataForm {
     reader.readAsDataURL(imageInput.files[0]);
   }
 
-  @bindable selectedRate;
-  // selectedRateChanged(newValue, oldValue) {
-  //   if (newValue && newValue.toUpperCase() === "RUPIAH") {
-  //     this.data.Rate = { Id: 0, Value: 1, CalculatedValue: 1 };
-  //   }
-  //   else {
-  //     this.data.Rate = this.RateDollar;
-  //   }
-  // }
-
   @computedFrom("data.Id")
   get isEdit() {
     return (this.data.Id || 0) != 0;
@@ -350,10 +367,6 @@ export class DataForm {
     return lineLoader;
   }
 
-  get buyersLoader() {
-    return BuyersLoader;
-  }
- 
   @bindable quantity;
   async quantityChanged(newValue) {
     this.data.Quantity = newValue;
@@ -364,7 +377,9 @@ export class DataForm {
     if (this.data.CostCalculationGarment_Materials) {
       this.data.CostCalculationGarment_Materials.forEach(item => {
         item.QuantityOrder = this.data.Quantity;
+        item.Efficiency = this.data.Efficiency;
       })
+      this.context.itemsCollection.bind()
     }
   }
 
@@ -433,14 +448,14 @@ export class DataForm {
       let UnitCode = newVal.Code;
 
       let promises = [];
-      let OTL1 = this.rateService.search({ keyword: `OTL 1 - ${UnitCode}` }).then((results) => {
+      let OTL1 = this.rateService.search({ filter: JSON.stringify({ Name: "OTL 1", UnitCode: UnitCode }) }).then((results) => {
         let result = results.data[0] ? results.data[0] : this.defaultRate;
         result.Value = numeral(numeral(result.Value).format(rateNumberFormat)).value();
         return result;
       });
       promises.push(OTL1);
 
-      let OTL2 = this.rateService.search({ keyword: `OTL 2 - ${UnitCode}` }).then((results) => {
+      let OTL2 = this.rateService.search({ filter: JSON.stringify({ Name: "OTL 2", UnitCode: UnitCode }) }).then((results) => {
         let result = results.data[0] ? results.data[0] : this.defaultRate;
         result.Value = numeral(numeral(result.Value).format(rateNumberFormat)).value();
         return result;
@@ -510,9 +525,9 @@ export class DataForm {
     return productionCost;
   }
 
-  @computedFrom('data.ConfirmPrice', 'data.Rate', 'data.CommissionRate')
+  @computedFrom('data.ConfirmPrice', 'data.Insurance', 'data.Freight', 'data.Rate', 'data.CommissionRate')
   get NETFOB() {
-    let NETFOB = this.data.ConfirmPrice * this.data.Rate.Value - this.data.CommissionRate;
+    let NETFOB = (this.data.ConfirmPrice - this.data.Insurance - this.data.Freight) * this.data.Rate.Value - this.data.CommissionRate;
     NETFOB = numeral(NETFOB).format();
     this.data.NETFOB = numeral(NETFOB).value();
     return NETFOB;
@@ -527,6 +542,7 @@ export class DataForm {
     }
     freightCost = numeral(freightCost).format();
     this.data.FreightCost = numeral(freightCost).value();
+    
     return freightCost;
   }
 
@@ -544,5 +560,14 @@ export class DataForm {
     NETFOBP = numeral(NETFOBP).format();
     this.data.NETFOBP = numeral(NETFOBP).value();
     return NETFOBP;
+  }
+
+  enterDelegate(event) {
+    if (event.charCode === 13) {
+      event.preventDefault();
+      return false;
+    }
+    else
+      return true;
   }
 }
