@@ -53,9 +53,11 @@
   <require from="../../../lib/number-format-value-converter.js"></require>
   <require from="../../../lib/date-format-value-converter.js"></require>
   <au-input-form title.bind="title" with.bind="context">
+    <button slot="actions" class="btn btn-primary" click.delegate="unpostCallback($event)" if.one-way="hasUnpost">Unpost</button>
     <div class="row">
       <div class="col-md-10">
         <div class="col-md-4">
+          <au-textbox label="No Pre Sales Contract" options.bind="length4" value.bind="data.PreSCNo" read-only.bind="readOnly"></au-textbox>
           <au-textbox label="RO" options.bind="length4" value.bind="data.RO_Number" read-only.bind="readOnly"></au-textbox>
           <au-datepicker label="Tanggal" options.bind="length4" value.bind="data.CreatedUtc" read-only.bind="readOnly"></au-datepicker>
           <au-textbox label="Unit" options.bind="length4" value.bind="data.Unit.Name" read-only.bind="readOnly"></au-textbox>
@@ -209,5 +211,4 @@
       </div>
     </div>
   </au-input-form>
-  <button type="button" class="btn btn-default" click.delegate="copyCC()">Copy</button>
 </template>

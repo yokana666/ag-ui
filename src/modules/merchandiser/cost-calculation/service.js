@@ -10,7 +10,7 @@ const serviceUri = 'cost-calculation-garments';
 
 
 
-export class Service extends RestService {
+class Service extends RestService {
 
     constructor(http, aggregator, config, api) {
         super(http, aggregator, config, "sales");
@@ -23,7 +23,6 @@ export class Service extends RestService {
 
     create(data) {
         var endpoint = `${serviceUri}`;
-        console.log(data);
         return super.post(endpoint, data);
     }
 
@@ -39,7 +38,6 @@ export class Service extends RestService {
 
     update(data) {
         var endpoint = `${serviceUri}/${data.Id}`;
-        console.log(data);
         return super.put(endpoint, data);
     }
 
@@ -122,7 +120,6 @@ export class Service extends RestService {
     }
 
     getGarmentProductsDistinctDescription(keyword, filter) {
-        console.log(keyword,filter);
         var config = Container.instance.get(Config);
         var endpoint = config.getEndpoint("core");
 
@@ -144,6 +141,39 @@ export class Service extends RestService {
         return super.getPdf(endpoint);
     }
 
+    postCC(data) {
+        var endpoint = `${serviceUri}/post`;
+        return super.post(endpoint, data);
+    }
+
+    unpostCC(data) {
+        var endpoint = `${serviceUri}/unpost/${data.Id}`;
+        return super.put(endpoint, data.reason);
+    }
+
+    getMaterials(info) {
+        var endpoint = `${serviceUri}/materials/by-prmasteritemids`;
+        return super.list(endpoint, info);
+    }
+
 };
 
+const serviceUriPurchaseRequest = 'garment-purchase-requests';
 
+class PurchasingService extends RestService {
+    constructor(http, aggregator, config, endpoint) {
+        super(http, aggregator, config, "purchasing-azure");
+    }
+
+    search(info) {
+        var endpoint = `${serviceUriPurchaseRequest}/dynamic`;
+        return super.list(endpoint, info);
+    }
+
+    searchItems(info) {
+        var endpoint = `${serviceUriPurchaseRequest}/items`;
+        return super.list(endpoint, info);
+    }
+}
+
+export { Service, PurchasingService }

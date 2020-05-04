@@ -64,4 +64,18 @@ export class Service extends RestService {
         var endpoint = `${serviceUri}/pdf/${id}`;
         return super.getPdf(endpoint);
     }
+
+    postRO(data) {
+        var endpoint = `${serviceUri}/post`;
+        return super.post(endpoint, data);
+    }
+
+    unpostRO(id) {
+        var endpoint = `${serviceUri}/unpost/${id}`;
+        return super.put(endpoint);
+    }
+
+    getFile(path, fileName) {
+        return super.getFile(`azure-documents/${path}?fileName=${fileName}`);
+    }
 }

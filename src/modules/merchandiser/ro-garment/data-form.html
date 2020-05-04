@@ -4,13 +4,15 @@
       height: 25em !important;
     }
   </style>
-  <au-input-form title.bind="title" with.bind="context">
+  <au-input-form title.bind="title" with.bind="context" options.bind="formOptions"> <!-- formOptions untuk ro-validation-ppic -->
     <div class="row" if.bind="!readOnly">
       <div class="col-md-6">
         <au-autocomplete label="No RO" placeholder="Cari RO" value.bind="costCalculationGarment" error.bind="error.CostCalculationGarment"
           loader.one-time="costCalculationGarmentLoader" query.bind="filterCostCalculationGarment" options.bind="length4"
           text="RO_Number" read-only.bind="readOnly || isEdit"></au-autocomplete>
-        <au-textbox label="Description" value.bind="data.CostCalculationGarment.Description" read-only.bind="disabled" options.bind="length4"
+        <au-textbox label="Article" value.bind="data.CostCalculationGarment.Article" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
+        <au-textbox label="Description" value.bind="data.CostCalculationGarment.CommodityDescription" read-only.bind="disabled" options.bind="length4"
           show.bind="hasCostCalculationGarment"></au-textbox>
       </div>
       <div class="col-md-6">
@@ -31,9 +33,11 @@
     <div class="row" if.bind="readOnly">
       <div class="col-md-4">
         <au-textbox label="No RO" value.bind="data.CostCalculationGarment.RO_Number" read-only.bind="disabled" options.bind="length4" show.bind="hasCostCalculationGarment"></au-textbox>
+        <au-textbox label="Article" value.bind="data.CostCalculationGarment.Article" read-only.bind="disabled" options.bind="length4"
+          show.bind="hasCostCalculationGarment"></au-textbox>
         <au-textbox label="Unit" value.bind="data.CostCalculationGarment.Unit.Name" read-only.bind="disabled" options.bind="length4"
           show.bind="hasCostCalculationGarment"></au-textbox>
-        <au-textbox label="Description" value.bind="data.CostCalculationGarment.Description" read-only.bind="disabled" options.bind="length4"
+        <au-textbox label="Description" value.bind="data.CostCalculationGarment.CommodityDescription" read-only.bind="disabled" options.bind="length4"
           show.bind="hasCostCalculationGarment"></au-textbox>
       </div>
       <div class="col-md-4">
@@ -111,9 +115,47 @@
           read-only.bind="readOnly"></au-multiline>
       </div>
     </div>
+
+    <div class="row" if.bind="hasCostCalculationGarment">
+      <div class="col-md-6">
+        <h4>File Dokumen</h4>
+        <table class="table table-hover table-bordered">
+          <thead>
+            <th class="col-md-11">File</th>
+            <th if.bind="!readOnly" class="col-md-1">
+              <button click.delegate="onAddDocument()" class="btn btn-success pull-right">+</button>
+            </th>
+          </thead>
+          <tbody>
+            <tr if.bind="!data.DocumentsFileName || data.DocumentsFileName.length < 1">
+              <td colspan="2">
+                Tidak ada file
+              </td>
+            </tr>
+            <tr if.bind="data.DocumentsFileName" repeat.for="doc of data.DocumentsFileName">
+              <td if.bind="readOnly">
+                <button class="btn btn-primary justify-content-center" click.delegate="downloadDocument($index)">${doc}</button>
+              </td>
+              <td if.bind="!readOnly">
+                <input if.bind="!documentsPathTemp[$index]" type="file" id="documentInput${$index}" value.bind="documentUpload" change.delegate="documentInputChanged($index)" accept=".pdf, .xls, .xlsx, .doc, .docx">
+                <button if.bind="documentsPathTemp[$index]" class="btn btn-primary justify-content-center" click.delegate="downloadDocument($index)">${doc}</button>
+                <span class="text-danger" if.bind="error.DocumentsFile[$index]">${error.DocumentsFile[$index]}</span>
+              </td>
+              <td if.bind="!readOnly">
+                  <button class="btn btn-danger pull-right" click.delegate="onRemoveDocument($index)">-</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <div class="row" show.bind="hasCostCalculationGarment">
       <div class="col-md-12">
-        <input type="file" id="imageInput" value.bind="imageUpload" accept="image/*" if.bind="!readOnly" multiple>
+        <h4>File Gambar</h4>
+        <input type="file" id="imageInput" value.bind="imageUpload" accept="image/*" style="display: none;">
+        <button type="button" if.bind="!readOnly" onclick="document.getElementById('imageInput').click()">Add Image</button>
+        <br>
         <br>
         <template repeat.for="imageSrc of imagesSrc">
           <div style="display: inline-block; height: 250px; width: auto; margin-right:20px;">
