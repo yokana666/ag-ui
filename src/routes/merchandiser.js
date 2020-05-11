@@ -102,7 +102,7 @@ module.exports = [
         name: 'cost-calculation-by-user',
         moduleId: './modules/merchandiser/cost-calculation/index',
         nav: true,
-        title: 'Cost Calculation Export Garment',
+        title: 'Cost Calculation Garment',
         auth: true,
         settings: {
             group: "merchandiser",
@@ -116,7 +116,7 @@ module.exports = [
         name: 'cost-calculation',
         moduleId: './modules/merchandiser/cost-calculation/index',
         nav: true,
-        title: 'Cost Calculation Export Garment (Semua User)',
+        title: 'Cost Calculation Garment (Semua User)',
         auth: true,
         settings: {
             group: "merchandiser",
@@ -226,7 +226,7 @@ module.exports = [
         name: 'ro-garment-by-user',
         moduleId: './modules/merchandiser/ro-garment/index',
         nav: true,
-        title: 'RO Export Garment',
+        title: 'RO Garment',
         auth: true,
         settings: {
             group: "merchandiser",
@@ -240,7 +240,7 @@ module.exports = [
         name: 'ro-garment',
         moduleId: './modules/merchandiser/ro-garment/index',
         nav: true,
-        title: 'RO Export Garment (Semua User)',
+        title: 'RO Garment (Semua User)',
         auth: true,
         settings: {
             group: "merchandiser",

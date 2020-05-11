@@ -213,7 +213,11 @@ export class View {
         if (this.hasFOBRemark) {
             const a = (1.05 * CM_Price / this.data.Rate.Value) - (_insurance + _freight);
             console.log(CM_Price, this.data.Rate.Value, _insurance, _freight);
-            this.fobRemark = `US$ ${(_confirmPrice + a).toLocaleString('en-EN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+            if(this.isDollar){
+                this.fobRemark = `US$ ${(_confirmPrice + a).toLocaleString('en-EN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;  
+            } else {
+                this.fobRemark = `Rp ${(_confirmPrice + a).toLocaleString('en-EN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;   
+            }
         } else {
             this.fobRemark = "-";
         }
