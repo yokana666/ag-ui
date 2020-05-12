@@ -594,7 +594,7 @@ module.exports = [
         name: 'budget-export-garment-report',
         moduleId: './modules/merchandiser/report/budget-export-garment-report/index',
         nav: true,
-        title: 'Monitoring Budget Export Garment',
+        title: 'Monitoring Budget Garment',
         auth: true,
         settings: {
             group: "merchandiser",
