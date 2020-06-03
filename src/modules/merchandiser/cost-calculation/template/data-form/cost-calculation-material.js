@@ -407,7 +407,7 @@ uomView =(uom)=>{
 
     @computedFrom('data.Quantity', 'data.Price', 'data.Conversion', 'data.isFabricCM')
     get total() {
-        let total = this.data.Quantity && this.data.Conversion && parseFloat( this.data.Price) ? (parseFloat(this.data.Price) / this.data.Conversion * this.data.Quantity ): 0;
+        let total = this.data.Quantity && this.data.Conversion && parseFloat(this.data.Price) ? (parseFloat(this.data.Price) / this.data.Conversion * this.data.Quantity ): 0;
         //total = numeral(total).format();
         if (this.data.isFabricCM) {
             this.data.Total = 0;
