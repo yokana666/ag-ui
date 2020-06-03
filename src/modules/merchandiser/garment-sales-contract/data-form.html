@@ -238,6 +238,13 @@
           options.bind="controlOptions">
         </au-checkbox>
 
+        <au-checkbox
+        label="Include PPN?"
+        value.bind="data.IsIncludePPN"
+        read-only.bind="readOnly"
+        options.bind="controlOptions">
+        </au-checkbox>  <!-- 15-05-2020 -->
+
         <au-multiline
           label="Payment"
           value.bind="data.PaymentDetail"
