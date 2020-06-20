@@ -2,6 +2,7 @@ import { inject, Lazy } from "aurelia-framework";
 import { Router } from "aurelia-router";
 import { Service } from "./service";
 import { Dialog } from "../../../au-components/dialog/dialog";
+import { UnpostDialog } from "./template/dialog/unpost";
 import numeral from "numeral";
 numeral.defaultFormat("0,0.00");
 const US = "US$. ";
@@ -9,7 +10,7 @@ const RP = "Rp. ";
 
 @inject(Router, Service, Dialog)
 export class View {
-  title = "Detail Cost Calculation Export Garment";
+  title = "Detail Cost Calculation Garment";
   readOnly = true;
   length4 = {
     label: {
@@ -39,6 +40,7 @@ export class View {
       { header: "Yarn", value: "Product.yarn" },
       { header: "Width", value: "Product.width" },
       { header: "Deskripsi", value: "Description" },
+      { header: "Detail Barang", value: "ProductRemark" },
       { header: "Kuantitas", value: "Quantity" },
       { header: "Harga Per Satuan (Rp)", value: "PricePerUnit" },
       { header: "Total (Rp)", value: "Total" }
@@ -61,13 +63,17 @@ export class View {
   }
 
   get isDollar() {
-    return this.data.Rate.Id !== 0;
+    return this.data.Rate.Id !== 6;
   }
 
-  async activate(params) {
+  async activate(params, routeConfig, navigationInstruction) {
+    const instruction = navigationInstruction.getAllInstructions()[0];
+    const parentInstruction = instruction.parentInstruction;
+    const byUser = parentInstruction.config.settings.byUser;
+
     var id = params.id;
     this.data = await this.service.getById(id);
-    if(this.data.SCGarmentId)
+    if(this.data.ApprovalMD.IsApproved || this.data.SCGarmentId)
     {
       this.editCallback=null;
       this.deleteCallback=null;
@@ -152,6 +158,18 @@ export class View {
     this.data.LeadTime = `${this.data.LeadTime} hari`
     this.data.ConfirmPrice=(this.data.ConfirmPrice.toLocaleString('en-EN', { minimumFractionDigits: 4}));
     
+    // Unpost tampil jika IsPosted = true dan ada approval yang false
+    this.hasUnpost = this.data.IsPosted && !(this.data.ApprovalIE.IsApproved && this.data.ApprovalMD.IsApproved && this.data.ApprovalPPIC.IsApproved && this.data.ApprovalPurchasing.IsApproved);
+    if (this.data.IsPosted) {
+      this.editCallback = null;
+      this.deleteCallback = null;
+    }
+
+    if (!byUser) {
+      this.editCallback = null;
+      this.deleteCallback = null;
+      this.hasUnpost = false; 
+    }
   }
 
   async bind(context) {
@@ -164,10 +182,6 @@ export class View {
 
   printBudget() {
     this.service.getBudgetById(this.data.Id);
-  }
-
-  copyCC() {
-    this.router.navigateToRoute("copy", { id: this.data.Id });
   }
 
   list() {
@@ -183,13 +197,34 @@ export class View {
   }
 
   deleteCallback(event) {
-    this.service
-      .delete(this.data)
-      .then(result => {
-        this.list();
-      })
-      .catch(e => {
-        this.dialog.alert(e, "Hapus Cost Calculation");
+    if(confirm("Delete data?")) {
+      this.service
+        .delete(this.data)
+        .then(result => {
+          this.list();
+        })
+        .catch(e => {
+          this.dialog.alert(e, "Hapus Cost Calculation");
+        });
+    }
+  }
+
+  unpostCallback() {
+    this.dialog.show(UnpostDialog, {})
+      .then(response => {
+        if (!response.wasCancelled) {
+          this.service.unpostCC({ Id: this.data.Id, reason: JSON.stringify(response.output) })
+            .then(result => {
+              this.list();
+            })
+            .catch(error => {
+              if (typeof error === 'string') {
+                alert(`Unpost dibatalkan : ${error}`);
+              } else {
+                alert(`Error : ${error.message}`);
+              }
+            });
+        }
       });
   }
 }

@@ -132,7 +132,7 @@
         </au-multiline>
 
         <au-numeric
-          label="Harga USD"
+          label="Harga"
           value.bind="data.Price"
           error.bind="error.Price"
           read-only.bind="readonly"
@@ -142,7 +142,7 @@
           if.bind="!hasItems">
         </au-numeric>
         <au-numeric
-          label="Harga USD"
+          label="Harga"
           value.bind="data.Price"
           error.bind="error.Price"
           read-only="true"
@@ -180,14 +180,13 @@
           options.bind="controlOptions">
         </au-dropdown>
 
-        <au-dropdown
+        <au-multiline
           label="Destination"
           value.bind="data.Country"
           error.bind="error.Country"
           read-only.bind="readOnly"
-          items.bind="countries"
-          options.bind="controlOptions"
-        ></au-dropdown>
+          options.bind="controlOptions">
+        </au-multiline>
 
         <au-multiline
           label="No. HS"
@@ -238,6 +237,13 @@
           read-only.bind="readOnly"
           options.bind="controlOptions">
         </au-checkbox>
+
+        <au-checkbox
+        label="Include PPN?"
+        value.bind="data.IsIncludePPN"
+        read-only.bind="readOnly"
+        options.bind="controlOptions">
+        </au-checkbox>  <!-- 15-05-2020 -->
 
         <au-multiline
           label="Payment"

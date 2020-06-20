@@ -30,6 +30,7 @@ export async function configure(aurelia) {
         }
       }
 
+
       //var auth = "https://ag-auth-api-dev.azurewebsites.net/v1/";
       //var auth = "https://ag-auth-api-prd.azurewebsites.net/v1/";
       var auth = "https://ag-auth-webapi-prd-bearer.azurewebsites.net/v1/";
@@ -37,7 +38,8 @@ export async function configure(aurelia) {
       // var production = "https://dl-production-webapi.azurewebsites.net/v1/";
       // var productionAzure = "https://com-danliris-service-finishing-printing-dev.azurewebsites.net/v1/";
       // var purchasing = "https://dl-purchasing-webapi-dev.azurewebsites.net/v1/";
-      // var purchasingAzure = "https://com-danliris-service-purchasing-dev.azurewebsites.net/v1/";
+      var purchasingAzure = "https://com-ag-service-purchasing.azurewebsites.net/v1/";
+      // var purchasingAzure = "http://localhost:55080/v1/";
       // var garmentPurchasing = "https://dl-purchasing-garment-webapi.azurewebsites.net/v1/";
       // var inventory = "https://dl-inventory-webapi.azurewebsites.net/v1/";
        var inventoryAzure = "https://com-ag-service-inventory.azurewebsites.net/v1/";
@@ -48,7 +50,7 @@ export async function configure(aurelia) {
       // var customsReport = "https://com-danliris-service-support.azurewebsites.net/v1/";
       // var merchandiser = "https://com-danliris-service-md.azurewebsites-dev.net/v1/";
       // const dealTracking = 'https://com-danliris-service-deal-tracking-dev.azurewebsites.net/v1/';
-      var sales = "https://com-ag-service-sales.azurewebsites.net/v1/";
+         var sales = "https://com-ag-service-sales.azurewebsites.net/v1/";
       // var weaving = "https://com-danliris-service-weaving-dev.azurewebsites.net/";
       // var finance = "https://com-danliris-service-finance-accounting-dev.azurewebsites.net/v1/";
 
@@ -57,10 +59,10 @@ export async function configure(aurelia) {
       // config.registerEndpoint('production', production, defaultConfig);
       // config.registerEndpoint('production-azure', productionAzure, defaultConfig);
       // config.registerEndpoint('purchasing', purchasing, defaultConfig);
-      // config.registerEndpoint('purchasing-azure', purchasingAzure, defaultConfig);
+      config.registerEndpoint('purchasing-azure', purchasingAzure, defaultConfig);
       // config.registerEndpoint('garment-purchasing', garmentPurchasing, defaultConfig);
       // config.registerEndpoint('inventory', inventory, defaultConfig);
-       config.registerEndpoint('inventory-azure', inventoryAzure, defaultConfig);
+      config.registerEndpoint('inventory-azure', inventoryAzure, defaultConfig);
       // config.registerEndpoint('garment-master-plan', garmentMasterPlan, defaultConfig);
       // config.registerEndpoint('spinning', spinning, defaultConfig);
       // config.registerEndpoint('int-purchasing', intPurchasing, defaultConfig);
