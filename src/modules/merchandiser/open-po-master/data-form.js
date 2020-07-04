@@ -93,8 +93,9 @@ export class DataForm {
         { header: "Total" },
         { header: "Jumlah Tersedia" },
         { header: "Satuan" },
-        { header: "Approval Md" },
+        { header: "Approval Kabag Md" },
         { header: "Approval Purchasing" },
+        { header: "Approval Kadiv Md" },
     ]
 
     async selectedPRNoChanged(newValue) {
@@ -109,6 +110,8 @@ export class DataForm {
         } else {
             this.data = {};
         }
+
+        console.log(newValue);
     }
 
     async setItems(items) {

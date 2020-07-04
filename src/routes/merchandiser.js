@@ -180,6 +180,20 @@ module.exports = [
             type: "kadivmd"
         }
     },
+    //{
+    //    route: '/merchandiser/cost-calculation-approval/direksi',
+    //    name: 'cost-calculation-approval-direksi',
+    //    moduleId: './modules/merchandiser/cost-calculation-approval/index',
+    //    nav: true,
+    //    title: 'Cost Calculation Approval - Direksi',
+    //    auth: true,
+    //    settings: {
+    //        group: "merchandiser",
+    //        permission: { "C9": 1 },
+    //        iconClass: 'fa fa-calculator',
+    //        type: "direksi"
+    //    }
+    //},
     {
         route: '/merchandiser/budget-validation-process',
         name: 'budget-validation-process',
@@ -348,6 +362,19 @@ module.exports = [
         moduleId: './modules/merchandiser/garment-sales-contract/copy/index',
         nav: true,
         title: 'Copy Sales Contract Per RO',
+        auth: true,
+        settings: {
+            group: "merchandiser",
+            permission: { "PGA": 1, "C5": 1, "C9": 1 },
+            iconClass: 'fa fa-calculator'
+        }
+    },
+    {
+        route: '/merchandiser/ro-garment-copy',
+        name: 'ro-garment-copy',
+        moduleId: './modules/merchandiser/ro-garment/copy/index',
+        nav: true,
+        title: 'Copy RO Garment',
         auth: true,
         settings: {
             group: "merchandiser",
@@ -603,6 +630,19 @@ module.exports = [
         }
     },
     {
+        route: '/merchandiser/cc-ro-garment-history-report',
+        name: 'cc-ro-garment-history-report',
+        moduleId: './modules/merchandiser/report/cc-ro-garment-history-by-section-report/index',
+        nav: true,
+        title: 'Monitoring History Cost Calculatin & Budget Garment',
+        auth: true,
+        settings: {
+            group: "merchandiser",
+            permission: { "PGA": 1, "C9": 1 },
+            iconClass: 'fa fa-dashboard'
+        }
+    },
+    {
         route: '/merchandiser/open-po-master',
         name: 'open-po-master',
         moduleId: './modules/merchandiser/open-po-master/index',
@@ -611,24 +651,38 @@ module.exports = [
         auth: true,
         settings: {
             group: "merchandiser",
-            permission: { "C9": 1 },
+            permission: { "PGA": 1, "C9": 1 },
             iconClass: 'fa fa-dashboard'
         }
     },
     {
-        route: '/merchandiser/open-po-master-approval/md',
-        name: 'open-po-master-approval-md',
+        route: '/merchandiser/open-po-master-approval/kabag-md',
+        name: 'open-po-master-approval-kabag-md',
         moduleId: './modules/merchandiser/open-po-master-approval/index',
         nav: true,
-        title: 'Approval Open PO Master - Md',
+        title: 'Approval Open PO Master - Kabag Md',
         auth: true,
         settings: {
             group: "merchandiser",
             permission: { "C9": 1 },
             iconClass: 'fa fa-dashboard',
-            type: "md"
+            type: "kabag_md"
         }
     },
+    // {
+    //     route: '/merchandiser/open-po-master-approval/md',
+    //     name: 'open-po-master-approval-md',
+    //     moduleId: './modules/merchandiser/open-po-master-approval/index',
+    //     nav: true,
+    //     title: 'Approval Open PO Master - Md',
+    //     auth: true,
+    //     settings: {
+    //         group: "merchandiser",
+    //         permission: { "C9": 1 },
+    //         iconClass: 'fa fa-dashboard',
+    //         type: "md"
+    //     }
+    // },
     {
         route: '/merchandiser/open-po-master-approval/purchasing',
         name: 'open-po-master-approval-purchasing',
@@ -643,4 +697,31 @@ module.exports = [
             type: "purchasing"
         }
     },
+    {
+        route: '/merchandiser/open-po-master-approval/kadiv-md',
+        name: 'open-po-master-approval-kadiv-md',
+        moduleId: './modules/merchandiser/open-po-master-approval/index',
+        nav: true,
+        title: 'Approval Open PO Master - Kadiv Md',
+        auth: true,
+        settings: {
+            group: "merchandiser",
+            permission: { "C9": 1 },
+            iconClass: 'fa fa-dashboard',
+            type: "kadiv_md"
+        }
+    },
+    {
+        route: '/merchandiser/unit-delivery-order-marketing',
+        name: 'unit-delivery-order-marketing',
+        moduleId: './modules/merchandiser/unit-delivery-order-marketing/index',
+        nav: true,
+        title: 'DO Marketing',
+        auth: true,
+        settings: {
+            group: "merchandiser",
+            permission: { "PGA": 1, "C9": 1 },
+            iconClass: 'fa fa-calculator'
+        }
+    }
 ];
