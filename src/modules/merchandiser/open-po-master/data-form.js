@@ -110,8 +110,6 @@ export class DataForm {
         } else {
             this.data = {};
         }
-
-        console.log(newValue);
     }
 
     async setItems(items) {

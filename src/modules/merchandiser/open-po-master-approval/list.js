@@ -3,8 +3,9 @@ import { Service } from "./service";
 import { Router } from 'aurelia-router';
 import moment from 'moment';
 import { activationStrategy } from 'aurelia-router';
+import { AuthService } from "aurelia-authentication";
 
-@inject(Router, Service)
+@inject(Router, Service, AuthService)
 export class List {
     context = ["Rincian"]
 
@@ -54,9 +55,10 @@ export class List {
             });
     }
 
-    constructor(router, service) {
+    constructor(router, service, authService) {
         this.service = service;
         this.router = router;
+        this.authService = authService;
     }
 
     determineActivationStrategy() {
@@ -71,9 +73,15 @@ export class List {
         this.title = parentInstruction.config.title;
         const type = parentInstruction.config.settings.type;
 
+        let username = null;
+        if (this.authService.authenticated) {
+            const me = this.authService.getTokenPayload();
+            username = me.username;
+        }
+
         switch (type) {
             case "kabag_md":
-                this.filter = {};
+                this.filter = { SectionName: username };
                 this.filter["Items.Any(IsOpenPO==true && IsApprovedOpenPOMD==false)"] = true;
                 break;
             case "purchasing":
