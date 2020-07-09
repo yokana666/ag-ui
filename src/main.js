@@ -30,9 +30,11 @@ export async function configure(aurelia) {
         }
       }
 
+
+      //var auth = "https://ag-auth-api-dev.azurewebsites.net/v1/";
+      //var auth = "https://ag-auth-api-prd.azurewebsites.net/v1/";
       var auth = "https://ag-auth-api-dev.azurewebsites.net/v1/";
       var core = "https://com-ag-service-core-dev.azurewebsites.net/v1/";
-      // var core = "http://localhost:63704/v1/";
       // var production = "https://dl-production-webapi.azurewebsites.net/v1/";
       // var productionAzure = "https://com-danliris-service-finishing-printing-dev.azurewebsites.net/v1/";
       // var purchasing = "https://dl-purchasing-webapi-dev.azurewebsites.net/v1/";
@@ -40,7 +42,7 @@ export async function configure(aurelia) {
       // var purchasingAzure = "http://localhost:49831/v1/";
       // var garmentPurchasing = "https://dl-purchasing-garment-webapi.azurewebsites.net/v1/";
       // var inventory = "https://dl-inventory-webapi.azurewebsites.net/v1/";
-      var inventoryAzure = "https://com-ag-service-inventory-dev.azurewebsites.net/v1/";
+       var inventoryAzure = "https://com-ag-service-inventory-dev.azurewebsites.net/v1/";
       // var garmentMasterPlan = "https://dl-garment-master-plan-webapi.azurewebsites.net/v1/";
       // var spMasterPlan = "https://dl-sp-master-plan-webapi-dev.mybluemix.net/v1/";
       // var spinning = "https://com-danliris-service-spinning-dev.azurewebsites.net/";
@@ -48,8 +50,7 @@ export async function configure(aurelia) {
       // var customsReport = "https://com-danliris-service-support.azurewebsites.net/v1/";
       // var merchandiser = "https://com-danliris-service-md.azurewebsites-dev.net/v1/";
       // const dealTracking = 'https://com-danliris-service-deal-tracking-dev.azurewebsites.net/v1/';
-      var sales = "https://com-ag-service-sales-dev.azurewebsites.net/v1/";
-      // var sales = "http://localhost:64340/v1/";
+         var sales = "https://com-ag-service-sales-dev.azurewebsites.net/v1/";
       // var weaving = "https://com-danliris-service-weaving-dev.azurewebsites.net/";
       var finance = "https://com-ag-service-finance-accounting-dev.azurewebsites.net/v1/";
       // var finance = "http://localhost:59303/v1/";

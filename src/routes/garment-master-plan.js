@@ -74,7 +74,7 @@ module.exports = [
         settings: {
             group: "g-master-plan",
 
-           // permission: { "PGA": 1, "C9": 1 },
+            permission: { "PGA": 1, "C9": 1 },
             iconClass: 'fa fa-dashboard'
         }
     },
