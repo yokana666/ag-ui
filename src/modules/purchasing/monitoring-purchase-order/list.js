@@ -7,9 +7,9 @@ var BudgetLoader = require('../../../loader/budget-loader');
 var CategoryLoader = require('../../../loader/category-loader');
 var SupplierLoader = require('../../../loader/supplier-loader');
 var AccountLoader = require('../../../loader/account-loader');
-var PurchaseOrderLoader = require('../../../loader/purchase-request-by-user-loader');
+var PurchaseOrderLoader = require('../../../loader/purchase-request-all-loader');
 var EPOLoader = require('../../../loader/purchase-order-external-loader');
-
+var DivisionLoader = require('../../../loader/division-loader');
 
 @inject(Router, Service)
 export class List {
@@ -51,6 +51,7 @@ export class List {
             size: this.info.size,
             prNo: this.pr ? this.pr.no : "",
             supplierId:this.supplier? this.supplier._id : "",
+            divisionCode: this.division ? this.division.Code : "",
             unitId: this.unit ? this.unit.Id : "",
             categoryId: this.category ? this.category._id : "",
             budgetId: this.budget ? this.budget._id : "",
@@ -59,6 +60,8 @@ export class List {
             status: this.poState,
             dateTo: this.dateTo? moment(this.dateTo).format("MM/DD/YYYY"):"",
             dateFrom: this.dateFrom? moment(this.dateFrom).format("MM/DD/YYYY"):"",
+            dateToPO: this.dateToPO ? moment(this.dateToPO).format("MM/DD/YYYY") : "",
+            dateFromPO: this.dateFromPO ? moment(this.dateFromPO).format("MM/DD/YYYY") : "",
 
         };
         // var dateFormat = "DD MMM YYYY";
@@ -108,11 +111,14 @@ export class List {
         this.pr=null;
         this.purchaseOrder = "";
         this.supplier = "";
+        this.division = "";
         this.dateFrom = null;
         this.dateTo = null;
         this.poState ="";
         this.budget = "";
         this.staffName = "";
+        this.dateFromPO = null;
+        this.dateToPO = null;
         //this.data = [];
     }
 
@@ -124,11 +130,14 @@ export class List {
             categoryId: this.category ? this.category._id : "",
             budgetId: this.budget ? this.budget._id : "",
             supplierId:this.supplier? this.supplier._id : "",
+            divisionCode: this.division ? this.division.Code : "",
             epoNo:this.epo? this.epo.no : "",
             staff: this.staffName? this.staffName.username : "",
             status: this.poState,
             dateTo: this.dateTo? moment(this.dateTo).format("MM/DD/YYYY"):"",
             dateFrom: this.dateFrom? moment(this.dateFrom).format("MM/DD/YYYY"):"",
+            dateToPO: this.dateToPO ? moment(this.dateToPO).format("MM/DD/YYYY") : "",
+            dateFromPO: this.dateFromPO ? moment(this.dateFromPO).format("MM/DD/YYYY") : "",
 
         };
         
@@ -143,6 +152,16 @@ export class List {
         if (_startDate > _endDate || !this.dateTo) {
             this.dateTo = e.srcElement.value;
         }
+
+    }
+    dateFromPOChanged(e) {
+      var _startDate = new Date(e.srcElement.value);
+      var _endDate = new Date(this.dateToPO);
+      this.dateMin = moment(_startDate).format("YYYY-MM-DD");
+
+      if (_startDate > _endDate || !this.dateTo) {
+        this.dateToPO = e.srcElement.value;
+      }
 
     }
     changePage(e) {
@@ -177,4 +196,11 @@ export class List {
     get accountLoader() {
         return AccountLoader;
     }
+    get divisionLoader() {
+        return DivisionLoader;
+    }
+    divisionView = (division) => {
+      return `${division.Name}`;
+    }
+    
 }

@@ -37,7 +37,7 @@ export async function configure(aurelia) {
       // var productionAzure = "https://com-danliris-service-finishing-printing-dev.azurewebsites.net/v1/";
       // var purchasing = "https://dl-purchasing-webapi-dev.azurewebsites.net/v1/";
       var purchasingAzure = "https://com-ag-service-purchasing-dev.azurewebsites.net/v1/";
-      // var purchasingAzure = "http://localhost:55080/v1/";
+      // var purchasingAzure = "http://localhost:49831/v1/";
       // var garmentPurchasing = "https://dl-purchasing-garment-webapi.azurewebsites.net/v1/";
       // var inventory = "https://dl-inventory-webapi.azurewebsites.net/v1/";
       var inventoryAzure = "https://com-ag-service-inventory-dev.azurewebsites.net/v1/";
@@ -51,7 +51,8 @@ export async function configure(aurelia) {
       var sales = "https://com-ag-service-sales-dev.azurewebsites.net/v1/";
       // var sales = "http://localhost:64340/v1/";
       // var weaving = "https://com-danliris-service-weaving-dev.azurewebsites.net/";
-      // var finance = "https://com-danliris-service-finance-accounting-dev.azurewebsites.net/v1/";
+      var finance = "https://com-ag-service-finance-accounting-dev.azurewebsites.net/v1/";
+      // var finance = "http://localhost:59303/v1/";
 
       config.registerEndpoint('auth', auth);
       config.registerEndpoint('core', core);
@@ -70,7 +71,7 @@ export async function configure(aurelia) {
       // config.registerEndpoint('deal-tracking', dealTracking, defaultConfig);
       config.registerEndpoint('sales', sales, defaultConfig);
       // config.registerEndpoint('weaving', weaving, defaultConfig);
-      // config.registerEndpoint('finance', finance, defaultConfig);
+      config.registerEndpoint('finance', finance, defaultConfig);
     })
     .plugin("aurelia-authentication", baseConfig => {
       baseConfig.configure(authConfig);
