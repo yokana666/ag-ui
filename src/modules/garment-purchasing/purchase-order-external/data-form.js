@@ -101,7 +101,7 @@ export class DataForm {
         } else {
             this.options.kurs = { Rate: 1 };
         }
-        
+        // iki
     }
 
     @computedFrom("data.Id")
