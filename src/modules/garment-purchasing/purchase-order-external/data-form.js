@@ -24,6 +24,7 @@ export class DataForm {
     termPaymentLocalOptions = ['DAN LIRIS', 'CMT', 'FREE FROM BUYER', 'SAMPLE'];
     typePaymentOptions = ['T/T AFTER', 'FREE', 'CASH', 'T/T BEFORE'];
     typePaymentStorageOptions = ['EX MASTER FREE', 'EX MASTER BELI', 'EX MASTER GUDANG'];
+    customsCategoryOptions = ['', 'FASILITAS', 'NON FASILTIAS'];
     categoryOptions = ['FABRIC', 'ACCESSORIES']
     qualityStandardTypeOptions = ['JIS', 'AATCC', 'ISO']
 
@@ -146,19 +147,20 @@ export class DataForm {
     }
 
     selectedSupplierChanged(newValue) {
-        var _selectedSupplier = newValue;
+        var _selectedSupplier= newValue;
         if (_selectedSupplier.Id) {
-            this.data.Supplier = _selectedSupplier;
-            this.data.Supplier.Import=_selectedSupplier.import;
-            this.data.Supplier.Code=_selectedSupplier.code;
-            this.data.Supplier.Name=_selectedSupplier.name;
-            this.data.Supplier.Id=_selectedSupplier.Id;
-            this.data.SupplierId = _selectedSupplier.Id ? _selectedSupplier.Id : "";
-            this.data.IsUseVat = _selectedSupplier.usevat;
-            this.data.IsIncomeTax = _selectedSupplier.usetax;
-            this.data.IncomeTax=_selectedSupplier.IncomeTaxes;
-            this.data.IncomeTax.Name=_selectedSupplier.IncomeTaxes.name;
-            this.data.IncomeTax.Rate=_selectedSupplier.IncomeTaxes.rate;
+            this.data.Supplier= _selectedSupplier;
+            this.data.Supplier.Import= _selectedSupplier.import;
+            this.data.Supplier.Code= _selectedSupplier.code;
+            this.data.Supplier.Name= _selectedSupplier.name;
+            this.data.Supplier.Id= _selectedSupplier.Id;
+            this.data.SupplierId= _selectedSupplier.Id ? _selectedSupplier.Id : "";
+            this.data.IsUseVat= _selectedSupplier.usevat;
+            this.data.IsIncomeTax= _selectedSupplier.usetax;
+            this.data.IncomeTax= _selectedSupplier.IncomeTaxes;
+            this.data.IncomeTax.Name= _selectedSupplier.IncomeTaxes.name;
+            this.data.IncomeTax.Rate= _selectedSupplier.IncomeTaxes.rate;
+            this.data.CustomsCategory= '';
         }
     }
 

@@ -46,6 +46,7 @@ export class DataForm {
                 { header: "No. Referensi PR" },
                 { header: "No. RO" },
                 { header: "Barang" },
+                { header: "Jenis Barang"},
                 { header: "Jumlah" },
                 { header: "Satuan" },
                 { header: "Konversi" },
@@ -321,6 +322,7 @@ export class DataForm {
                     _item.POId = fulfillment.pOId;
                     _item.POItemId = fulfillment.pOItemId;
                     _item.POSerialNumber = fulfillment.poSerialNumber;
+                    _item.CustomsCategory = fulfillment.customsCategory;
 
                     _item.Product = fulfillment.product;
                     _item.Product.Remark = fulfillment.productRemark;
