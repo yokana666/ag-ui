@@ -66,6 +66,7 @@ export class DataForm {
             columns: [
                 { header: "Kode Barang" },
                 { header: "Nama Barang" },
+                { header: "Jenis Barang" },
                 { header: "Keterangan Barang" },
                 { header: "RO Asal" },
                 { header: "Jumlah" },
@@ -216,14 +217,15 @@ export class DataForm {
                         DRItem.Article=same.Article;
                         DRItem.Conversion=parseFloat(same.Conversion);
                         DRItem.EPOItemId=dup.EPOItemId;
-                        DRItem.PRId= same.PRId;
+                        DRItem.PRId=same.PRId;
                         DRItem.PRNo=same.PRNo;
                         DRItem.DODetailId= dup.DODetailId;
                         DRItem.POItemId=dup.POItemId;
                         DRItem.POSerialNumber=dup.POSerialNumber;
+                        DRItem.CustomsCategory=same.CustomsCategory;
                         DRItem.PRItemId=dup.PRItemId;
                         DRItem.POId=same.POId;
-                        DRItem.Uom= same.Uom;
+                        DRItem.Uom=same.Uom;
                         DRItem.Quantity= DRItem.SmallQuantity/DRItem.Conversion;
                         DRItem.RONo=dritem.RONo;
                         DRItem.ReceiptQuantity=DRItem.SmallQuantity/DRItem.Conversion;
