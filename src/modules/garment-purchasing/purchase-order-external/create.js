@@ -49,6 +49,9 @@ export class Create {
                 } else {
                     this.error = e;
                 }
+
+                var CustomsCategory = this.data.CustomsCategory;
+                this.data.CustomsCategory = CustomsCategory.substr(CustomsCategory.indexOf(' ')+1);
             })
     }
 }

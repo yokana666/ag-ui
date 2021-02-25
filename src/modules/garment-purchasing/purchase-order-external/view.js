@@ -20,6 +20,10 @@ export class View {
         var id = params.id;
         this.poExId = id;
         this.data = await this.service.getById(id);
+
+        var CustomsCategory = this.data.CustomsCategory;
+        this.data.CustomsCategory = CustomsCategory.substr(CustomsCategory.indexOf(' ')+1);
+        
         var kurs = await this.service.getKurs(this.data.Currency.Code, new Date(this.data.OrderDate).toLocaleDateString());
         this.kurs=kurs[0];
         var isUsedSJ=false;

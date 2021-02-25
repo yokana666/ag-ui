@@ -49,11 +49,6 @@ export class DataForm {
         this.data = this.context.data;
         this.error = this.context.error;
         this.isItem = false;
-
-        if(this.data.CustomsCategory){
-            var CustomsCategory = this.data.CustomsCategory;
-            this.data.CustomsCategory = CustomsCategory.substr(CustomsCategory.indexOf(' ')+1);
-        }
         
         if(!this.data.OrderDate){
             this.data.OrderDate=new Date().toLocaleDateString();
@@ -80,15 +75,19 @@ export class DataForm {
         if (this.data.useVat) {
             this.options.isUseVat = true;
         }
+
         if (this.data.PaymentMethod === "CMT" && this.data.PaymentType==="FREE") {
             this.options.checkOverBudget = false;
         }
+
         else if (this.data.PaymentMethod === "FREE FROM BUYER" && this.data.PaymentType==="FREE") {
             this.options.checkOverBudget = false;
         }
+
         else if ((this.data.PaymentMethod === "FREE FROM BUYER" || this.data.PaymentMethod === "CMT") && this.data.PaymentType==="EX MASTER FREE") {
             this.options.checkOverBudget = false;
         }
+
         else {
             this.options.checkOverBudget = true;
         }
@@ -104,7 +103,6 @@ export class DataForm {
         } else {
             this.options.kurs = { Rate: 1 };
         }
-        
     }
 
     @computedFrom("data.Id")
